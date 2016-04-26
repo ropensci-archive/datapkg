@@ -1,0 +1,17 @@
+Package: datapackage
+Type: Package
+Title: Read and Write Data Packages
+Version: 0.1
+Authors@R: c(
+    person("Jeroen", "Ooms", email = "jeroen.ooms@stat.ucla.edu", role = c("aut", "cre")),
+    person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = "aut"))
+Description: Convenience functions for reading and writing datasets following
+    the 'data packagist' format.
+URL: http://dataprotocols.org/data-packages/
+License: MIT + file LICENSE
+Imports:
+    readr,
+    jsonlite
+Suggests:
+    ggplot2
+RoxygenNote: 5.0.1
