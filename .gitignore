@@ -9,3 +9,4 @@ src/rexp.pb.h
 src/Makevars
 inst/doc
 windows
+data/*

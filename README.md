@@ -9,9 +9,11 @@
 
 > Convenience functions for reading and writing datasets following the 'data packagist' format.
 
-Additional resources:
+## Introduction
 
- - http://dataprotocols.org/data-packages/
+Data-packages is a [standard format](http://dataprotocols.org/data-packages/) for describing meta-data for a collection of datasets. The R package `datapackage` provides convenience functions for reading and writing data and meta-data in this format. 
+
+The default behavior is to store datasets in the `data` sub-directory, which also is the standard location for datasets in R packages. Thereby the R package can also be a data-package which formalizes the bundled datasets.
 
 ## Hello World
 
