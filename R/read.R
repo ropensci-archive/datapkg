@@ -50,6 +50,16 @@ coerse_type <- function(x, type){
   )
 }
 
+get_type <- function(x){
+  if(inherits(x, "Date")) return("date")
+  if(inherits(x, "POSIXt")) return("datetime")
+  if(is.character(x)) return("string")
+  if(is.integer(x)) return("integer")
+  if(is.numeric(x)) return("numeric")
+  if(is.logical(x)) return("boolean")
+  return("character")
+}
+
 parse_bool <- function(x){
   is_true <- (x %in% c("yes", "y", "true", "t", "1"))
   is_false <- (x %in% c("no", "n", "false", "f", "0"))

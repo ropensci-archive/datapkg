@@ -176,6 +176,7 @@ data_package <- function(path = ".", verbose = TRUE){
         path = file_path,
         format = "tsv",
         hash = unname(hash),
+        schema = make_schema(data),
         dialect = base::list(
           header = TRUE,
           delimiter = ";"
@@ -259,6 +260,17 @@ data_package <- function(path = ".", verbose = TRUE){
     lockEnvironment(environment(), TRUE)
     structure(environment(), class=c("dpkg", "jeroen", "environment"))
   })
+}
+
+make_schema <- function(data){
+  out <- as.list(rep(NA, length(data)))
+  for(i in seq_along(data)){
+    out[[i]] <- list(
+      name = names(data)[i],
+      type = get_type(data[[i]])
+    )
+  }
+  out
 }
 
 from_json <- function(path){
