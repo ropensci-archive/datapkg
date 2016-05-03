@@ -12,6 +12,7 @@ print.jeroen <- function(x, title = paste0("<", is(x), ">"), indent = 0, ...){
       print(x[[fn]], title = NULL, indent = indent + 2L)
     }
   })
+  invisible(x)
 }
 
 #' @export

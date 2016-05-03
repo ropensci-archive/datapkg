@@ -10,6 +10,7 @@ read_data_package <- function(path, dialect = list(), hash = NULL) {
 read_data <- function(file, delimiter = ",", doubleQuote = TRUE, lineTerminator = "\r\n",
                       quoteChar = '"', escapeChar = "\\", skipInitialSpace = TRUE,
                       header = TRUE, caseSensitiveHeader = FALSE, ...){
+
   # unused: lineTerminator, skipInitialSpace, caseSensitiveHeader
   readr::read_delim(
     file = file,
