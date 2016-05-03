@@ -14,20 +14,23 @@
 #' @param path root directory of the data package
 #' @param verbose emits some debugging messages
 #' @examples # Create a data package in a dir
-#' mypkg <- tempfile()
-#' dir.create(mypkg)
-#' test <- data_package(mypkg)
+#' pkgdir <- tempfile()
+#' dir.create(pkgdir)
+#' pkg <- data_package(pkgdir)
 #'
 #' # Show methods
-#' print(x)
+#' print(pkg)
 #'
 #' # Examples
-#' x$author("Jerry", "jerry@gmail.com")
-#' x$resources$add(iris)
-#' x$sources$add("Fisher, R. A. (1936)")
+#' pkg$author("Jerry", "jerry@gmail.com")
+#' pkg$resources$add(iris)
+#' pkg$sources$add("Fisher, R. A. (1936)")
 #'
 #' # View json file
-#' x$json()
+#' pkg$json()
+#'
+#' # Parse data
+#' pkg$resources$read("iris")
 data_package <- function(path = ".", verbose = TRUE){
   pkg_file <- function(x, exists = TRUE) {
     normalizePath(file.path(path, x), mustWork = exists)
@@ -98,7 +101,7 @@ data_package <- function(path = ".", verbose = TRUE){
       find()
     }
     lockEnvironment(environment(), TRUE)
-    structure(environment(), class=c("jeroen", "environment"))
+    structure(environment(), class=c("dpkg-contributors", "jeroen", "environment"))
   }
 
   # Sources object
@@ -133,7 +136,7 @@ data_package <- function(path = ".", verbose = TRUE){
       find()
     }
     lockEnvironment(environment(), TRUE)
-    structure(environment(), class=c("jeroen", "environment"))
+    structure(environment(), class=c("datapkg-sources", "jeroen", "environment"))
   }
 
   # Resources object
@@ -155,7 +158,7 @@ data_package <- function(path = ".", verbose = TRUE){
         stop("Resource not found: ", title)
       data[[1]]
     }
-    add <- function(data, title, folder = "data", format = "tab"){
+    add <- function(data, title, folder = "data", format = "csv"){
       stopifnot(is.data.frame(data))
       if(missing(title))
         title <- deparse(substitute(data))
@@ -166,7 +169,7 @@ data_package <- function(path = ".", verbose = TRUE){
       file_path <- file.path(folder, file_name)
       abs_path <- pkg_file(file_path, exists = FALSE)
       dir.create(pkg_file(folder, exists = FALSE), showWarnings = FALSE)
-      readr::write_tsv(data, abs_path)
+      readr::write_delim(data, abs_path, delim = ";", col_names = TRUE)
       hash <- tools::md5sum(abs_path)
       rec <- base::list(
         title = title,
@@ -175,7 +178,7 @@ data_package <- function(path = ".", verbose = TRUE){
         hash = unname(hash),
         dialect = base::list(
           header = TRUE,
-          delimiter = "\t"
+          delimiter = ";"
         )
       )
       pkg_update(resources = c(pkg_read()$resources, base::list(rec)))
@@ -193,10 +196,10 @@ data_package <- function(path = ".", verbose = TRUE){
     read <- function(title, folder = "data"){
       target <- info(title)
       data_path <- pkg_file(target$path)
-      read_data_package(data_path, format = target$format, dialect = data$dialect, hash = data$hash)
+      read_data_package(data_path, dialect = target$dialect, hash = target$hash)
     }
     lockEnvironment(environment(), TRUE)
-    structure(environment(), class=c("jeroen", "environment"))
+    structure(environment(), class=c("datapkg-resources", "jeroen", "environment"))
   }
 
   # Exported methods

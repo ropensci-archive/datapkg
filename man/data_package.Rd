@@ -22,19 +22,22 @@ or \code{\link[readr:read_tsv]{readr::read_tsv}}.
 }
 \examples{
 # Create a data package in a dir
-mypkg <- tempfile()
-dir.create(mypkg)
-test <- data_package(mypkg)
+pkgdir <- tempfile()
+dir.create(pkgdir)
+pkg <- data_package(pkgdir)
 
 # Show methods
-print(x)
+print(pkg)
 
 # Examples
-x$author("Jerry", "jerry@gmail.com")
-x$resources$add(iris)
-x$sources$add("Fisher, R. A. (1936)")
+pkg$author("Jerry", "jerry@gmail.com")
+pkg$resources$add(iris)
+pkg$sources$add("Fisher, R. A. (1936)")
 
 # View json file
-x$json()
+pkg$json()
+
+# Parse data
+pkg$resources$read("iris")
 }
 
