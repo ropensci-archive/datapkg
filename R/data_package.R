@@ -14,11 +14,9 @@
 #' @param path root directory of the data package
 #' @param verbose emits some debugging messages
 #' @examples x <- data_package(tempdir())
-#' x$list_resources()
-#' x$add_resource(mtcars)
-#' x$add_resource(iris)
+#' x$author("Jerry", "jerry@gmail.com")
+#' x$resources$add(iris)
 #' x$json()
-#' x$remove_resource("mtcars")
 data_package <- function(path = ".", verbose = TRUE){
   pkg_file <- function(x, exists = TRUE) {
     normalizePath(file.path(path, x), mustWork = exists)

@@ -22,10 +22,8 @@ or \code{\link[readr:read_tsv]{readr::read_tsv}}.
 }
 \examples{
 x <- data_package(tempdir())
-x$list_resources()
-x$add_resource(mtcars)
-x$add_resource(iris)
+x$author("Jerry", "jerry@gmail.com")
+x$resources$add(iris)
 x$json()
-x$remove_resource("mtcars")
 }
 
