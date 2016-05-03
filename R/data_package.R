@@ -196,7 +196,7 @@ data_package <- function(path = ".", verbose = TRUE){
     read <- function(title, folder = "data"){
       target <- info(title)
       data_path <- pkg_file(target$path)
-      read_data_package(data_path, dialect = target$dialect, hash = target$hash)
+      read_data_package(data_path, dialect = target$dialect, hash = target$hash, target$schema)
     }
     lockEnvironment(environment(), TRUE)
     structure(environment(), class=c("datapkg-resources", "jeroen", "environment"))
