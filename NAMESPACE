@@ -3,7 +3,6 @@
 S3method("$",jeroen)
 S3method("[",jeroen)
 S3method("[[",jeroen)
-S3method(names,jeroen)
 S3method(print,jeroen)
 export(data_package)
 importFrom(readr,write_csv)

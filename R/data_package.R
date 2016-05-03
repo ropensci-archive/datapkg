@@ -181,7 +181,8 @@ data_package <- function(path = ".", verbose = TRUE){
     }
     read <- function(title, folder = "data"){
       target <- info(title)
-      read_data_package(target)
+      data_path <- pkg_file(target$path)
+      read_data_package(data_path, format = target$format, dialect = data$dialect, hash = data$hash)
     }
     lockEnvironment(environment(), TRUE)
     structure(environment(), class=c("jeroen", "environment"))
@@ -245,3 +246,17 @@ data_package <- function(path = ".", verbose = TRUE){
     structure(environment(), class=c("dpkg", "jeroen", "environment"))
   })
 }
+
+from_json <- function(path){
+  path <- normalizePath(path, mustWork = TRUE)
+  jsonlite::fromJSON(readLines(path, warn = FALSE), simplifyVector = FALSE)
+}
+
+to_json <- function(x){
+  jsonlite::toJSON(x, auto_unbox = TRUE, pretty = TRUE)
+}
+
+is_string <- function(x){
+  is.character(x) && identical(length(x), 1L)
+}
+
