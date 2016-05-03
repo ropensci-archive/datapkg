@@ -8,7 +8,7 @@ print.jeroen <- function(x, title = paste0("<", is(x), ">"), indent = 0, ...){
     if(is.function(x[[fn]])){
       cat(format_function(x[[fn]], fn, indent = indent), sep = "\n")
     } else {
-      cat(" $", fn, " >\n", sep = "")
+      cat(" $", fn, ":\n", sep = "")
       print(x[[fn]], title = NULL, indent = indent + 2L)
     }
   })

@@ -13,9 +13,20 @@
 #' @importFrom tools md5sum
 #' @param path root directory of the data package
 #' @param verbose emits some debugging messages
-#' @examples x <- data_package(tempdir())
+#' @examples # Create a data package in a dir
+#' mypkg <- tempfile()
+#' dir.create(mypkg)
+#' test <- data_package(mypkg)
+#'
+#' # Show methods
+#' print(x)
+#'
+#' # Examples
 #' x$author("Jerry", "jerry@gmail.com")
 #' x$resources$add(iris)
+#' x$sources$add("Fisher, R. A. (1936)")
+#'
+#' # View json file
 #' x$json()
 data_package <- function(path = ".", verbose = TRUE){
   pkg_file <- function(x, exists = TRUE) {

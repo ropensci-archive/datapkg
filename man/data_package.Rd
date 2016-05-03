@@ -21,9 +21,20 @@ ambiguous format and natively supported by R via \code{\link{read.table}}
 or \code{\link[readr:read_tsv]{readr::read_tsv}}.
 }
 \examples{
-x <- data_package(tempdir())
+# Create a data package in a dir
+mypkg <- tempfile()
+dir.create(mypkg)
+test <- data_package(mypkg)
+
+# Show methods
+print(x)
+
+# Examples
 x$author("Jerry", "jerry@gmail.com")
 x$resources$add(iris)
+x$sources$add("Fisher, R. A. (1936)")
+
+# View json file
 x$json()
 }
 
