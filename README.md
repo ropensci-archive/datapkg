@@ -1,11 +1,11 @@
 # datapackage
 
-[![Build Status](https://travis-ci.org/ropensci/datapackage.svg?branch=master)](https://travis-ci.org/ropensci/datapackage)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/datapackage?branch=master&svg=true)](https://ci.appveyor.com/project/jeroenooms/datapackage)
-[![Coverage Status](https://codecov.io/github/ropensci/datapackage/coverage.svg?branch=master)](https://codecov.io/github/ropensci/datapackage?branch=master)
+[![Build Status](https://travis-ci.org/ropenscilabs/datapackage.svg?branch=master)](https://travis-ci.org/ropenscilabs/datapackage)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropenscilabs/datapackage?branch=master&svg=true)](https://ci.appveyor.com/project/jeroenooms/datapackage)
+[![Coverage Status](https://codecov.io/github/ropenscilabs/datapackage/coverage.svg?branch=master)](https://codecov.io/github/ropenscilabs/datapackage?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/datapackage)](http://cran.r-project.org/package=datapackage)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/datapackage)](http://cran.r-project.org/web/packages/datapackage/index.html)
-[![Github Stars](https://img.shields.io/github/stars/ropensci/datapackage.svg?style=social&label=Github)](https://github.com/ropensci/datapackage)
+[![Github Stars](https://img.shields.io/github/stars/ropenscilabs/datapackage.svg?style=social&label=Github)](https://github.com/ropenscilabs/datapackage)
 
 > Convenience functions for reading and writing datasets following the 'data packagist' format.
 
