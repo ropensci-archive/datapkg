@@ -63,10 +63,12 @@ get_type <- function(x){
 parse_bool <- function(x){
   is_true <- (x %in% c("yes", "y", "true", "t", "1"))
   is_false <- (x %in% c("no", "n", "false", "f", "0"))
-  is_none <- (!is_true & !is_false)
+  is_na <- is.na(x) | (x %in% c("NA", "na", ""))
+  is_none <- (!is_true & !is_false & !is_na)
   if(any(is_none))
     stop("Failed to parse boolean values: ", paste(head(x[is_none], 5), collapse = ", "))
   out <- rep(FALSE, length(x))
+  out[is_na] <- NA
   out[is_true] <- TRUE
   out
 }

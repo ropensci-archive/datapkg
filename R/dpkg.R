@@ -169,7 +169,8 @@ data_package <- function(path = ".", verbose = TRUE){
       file_path <- file.path(folder, file_name)
       abs_path <- pkg_file(file_path, exists = FALSE)
       dir.create(pkg_file(folder, exists = FALSE), showWarnings = FALSE)
-      readr::write_delim(data, abs_path, delim = ";", col_names = TRUE)
+      write_data <- prepare_data(data)
+      readr::write_delim(write_data, abs_path, delim = ";", col_names = TRUE)
       hash <- tools::md5sum(abs_path)
       rec <- base::list(
         title = title,
@@ -260,6 +261,17 @@ data_package <- function(path = ".", verbose = TRUE){
     lockEnvironment(environment(), TRUE)
     structure(environment(), class=c("dpkg", "jeroen", "environment"))
   })
+}
+
+prepare_data <- function(data){
+  for(i in seq_along(data)){
+    if(is.logical(data[[i]])){
+      out <- ifelse(data[[i]], "true", "false")
+      out[is.na(data[[i]])] <- ""
+      data[[i]] <- out
+    }
+  }
+  data
 }
 
 make_schema <- function(data){
