@@ -1,0 +1,3 @@
+[submodule "tests/testsuite-py"]
+	path = tests/testsuite-py
+	url = https://github.com/frictionlessdata/testsuite-py
