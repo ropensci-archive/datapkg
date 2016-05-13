@@ -71,25 +71,25 @@ read_data_package <- function(path, dialect = list(), hash = NULL, fields = NULL
   do.call(parse_data_file, c(list(file = path, col_types = col_types), dialect))
 }
 
-make_field <- function(name = "", type = "string", description = "", format = "%Y-%m-%d", ...){
+make_field <- function(name = "", type = "string", description = "", format = NULL, ...){
   switch(type,
-         string = col_character(),
-         number = col_number(),
-         integer = col_integer(),
-         boolean = col_logical(),
-         object = col_character(),
-         array = col_character(),
-         date = col_date(sub("^fmt:", "", format)),
-         datetime = col_datetime(),
-         time = col_time(),
-         col_character()
+    string = col_character(),
+    number = col_number(),
+    integer = col_integer(),
+    boolean = col_logical(),
+    object = col_character(),
+    array = col_character(),
+    date = col_date(sub("^fmt:", "", format)),
+    datetime = col_datetime(sub("^fmt:", "", format)),
+    time = col_time(sub("^fmt:", "", format)),
+    col_character()
   )
 }
 
 ## Defaults from http://dataprotocols.org/csv-dialect/
 parse_data_file <- function(file, col_types = NULL, delimiter = ",", doubleQuote = TRUE,
-                            lineTerminator = "\r\n", quoteChar = '"', escapeChar = "", skipInitialSpace = TRUE,
-                            header = TRUE, caseSensitiveHeader = FALSE){
+    lineTerminator = "\r\n", quoteChar = '"', escapeChar = "", skipInitialSpace = TRUE,
+    header = TRUE, caseSensitiveHeader = FALSE){
 
   # unused: lineTerminator, skipInitialSpace, caseSensitiveHeader
   message("Reading file ", file)
