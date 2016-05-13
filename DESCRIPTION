@@ -1,4 +1,4 @@
-Package: datapackage
+Package: datapkg
 Type: Package
 Title: Read and Write Data Packages
 Version: 0.1
@@ -7,11 +7,13 @@ Authors@R: c(
     person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = "aut"))
 Description: Convenience functions for reading and writing datasets following
     the 'data packagist' format.
-URL: http://dataprotocols.org/data-packages/
+URL: http://frictionlessdata.io/data-packages/
 License: MIT + file LICENSE
 Imports:
+    methods,
     readr,
-    jsonlite
+    jsonlite,
+    curl
 Suggests:
     ggplot2
 RoxygenNote: 5.0.1

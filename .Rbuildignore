@@ -3,3 +3,5 @@
 ^appveyor\.yml$
 ^\.travis\.yml$
 ^data$
+^tests/testsuite-py$
+^datapackage.json$

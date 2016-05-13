@@ -7,9 +7,7 @@
 #' ambiguous format and natively supported by R via \code{\link{read.table}}
 #' or \code{\link[readr:read_tsv]{readr::read_tsv}}.
 #'
-#' @export
 #' @aliases datapackage
-#' @importFrom readr write_csv write_tsv
 #' @importFrom tools md5sum
 #' @param path root directory of the data package
 #' @param verbose emits some debugging messages
@@ -31,9 +29,9 @@
 #'
 #' # Parse data
 #' pkg$resources$read("iris")
-data_package <- function(path = ".", verbose = TRUE){
+datapkg_new <- function(path = ".", verbose = TRUE){
   pkg_file <- function(x, exists = TRUE) {
-    normalizePath(file.path(path, x), mustWork = exists)
+    normalizePath(file.path(path, x), mustWork = exists && !is_url(x))
   }
 
   pkg_json <- function(){
@@ -141,31 +139,38 @@ data_package <- function(path = ".", verbose = TRUE){
 
   # Resources object
   pkg_resources <- function(){
-    find <- function(title = "", folder = NULL){
+    find <- function(name = "", folder = NULL){
       data <- Filter(function(x){
-        if(length(folder) && !(grepl(paste0("^", folder, "/"), x$path))){
+        res_path <- paste0("", x$path)
+        res_name <- paste0("", x$name)
+        if(length(folder) && !(grepl(paste0("^", folder, "/"), res_path)))
           return(FALSE)
-        }
-        grepl(title, x$title, fixed = TRUE)
+        grepl(name, res_name, fixed = TRUE)
       }, pkg_read()$resources)
-      jsonlite:::simplifyDataFrame(data, c("title", "path", "format"), flatten = FALSE, simplifyMatrix = FALSE)
+      for(i in seq_along(data)){
+        data[[i]]$read = function(){
+          target <- data[[i]]
+          read_data_package(pkg_file(target$path), dialect = target$dialect, hash = target$hash, target$schema)
+        }
+      }
+      jsonlite:::simplifyDataFrame(data, c("name", "path", "format", "read"), flatten = FALSE, simplifyMatrix = FALSE)
     }
-    info <- function(title){
+    info <- function(name){
       data <- Filter(function(x){
-        (x$title == title)
+        (x$name == name)
       }, pkg_read()$resources)
       if(!length(data))
-        stop("Resource not found: ", title)
+        stop("Resource not found: ", name)
       data[[1]]
     }
-    add <- function(data, title, folder = "data", format = "csv"){
+    add <- function(data, name, folder = "data", format = "csv"){
       stopifnot(is.data.frame(data))
-      if(missing(title))
-        title <- deparse(substitute(data))
+      if(missing(name))
+        name <- deparse(substitute(data))
       format <- match.arg(format)
-      if(nrow(find(title)))
-        stop("Resource with title '", title, "' already exists.")
-      file_name <- paste(title, format, sep = ".")
+      if(nrow(find(name)))
+        stop("Resource with name '", name, "' already exists.")
+      file_name <- paste(name, format, sep = ".")
       file_path <- file.path(folder, file_name)
       abs_path <- pkg_file(file_path, exists = FALSE)
       dir.create(pkg_file(folder, exists = FALSE), showWarnings = FALSE)
@@ -173,7 +178,7 @@ data_package <- function(path = ".", verbose = TRUE){
       readr::write_delim(write_data, abs_path, delim = ";", col_names = TRUE)
       hash <- tools::md5sum(abs_path)
       rec <- base::list(
-        title = title,
+        name = name,
         path = file_path,
         format = "tsv",
         hash = unname(hash),
@@ -186,17 +191,17 @@ data_package <- function(path = ".", verbose = TRUE){
       pkg_update(resources = c(pkg_read()$resources, base::list(rec)))
       find()
     }
-    remove <- function(title, folder = "data"){
-      stopifnot(is_string(title))
-      target <- info(title)
+    remove <- function(name, folder = "data"){
+      stopifnot(is_string(name))
+      target <- info(name)
       unlink(pkg_file(target$path))
       pkg_update(resources = Filter(function(x){
-        (x$title != title)
+        (x$name != name)
       }, pkg_read()$resources))
       find()
     }
-    read <- function(title, folder = "data"){
-      target <- info(title)
+    read <- function(name){
+      target <- info(name)
       data_path <- pkg_file(target$path)
       read_data_package(data_path, dialect = target$dialect, hash = target$hash, target$schema)
     }
@@ -282,7 +287,7 @@ make_schema <- function(data){
       type = get_type(data[[i]])
     )
   }
-  out
+  list(fields = out)
 }
 
 from_json <- function(path){
@@ -296,5 +301,61 @@ to_json <- function(x){
 
 is_string <- function(x){
   is.character(x) && identical(length(x), 1L)
+}
+
+is_url <- function(x){
+  grepl("^[a-zA-Z]+://", x)
+}
+
+
+# Implements: http://dataprotocols.org/json-table-schema/#schema
+coerse_type <- function(x, type){
+  switch(type,
+         string = as.character(x),
+         number = as.numeric(x),
+         integer = as.integer(x),
+         boolean = parse_bool(x),
+         object = lapply(x, from_json),
+         array = lapply(x, from_json),
+         date = parse_date(x),
+         datetime = parse_datetime(x),
+         time = paste_time(x),
+         as.character(x)
+  )
+}
+
+get_type <- function(x){
+  if(inherits(x, "Date")) return("date")
+  if(inherits(x, "POSIXt")) return("datetime")
+  if(is.character(x)) return("string")
+  if(is.integer(x)) return("integer")
+  if(is.numeric(x)) return("number")
+  if(is.logical(x)) return("boolean")
+  return("string")
+}
+
+parse_bool <- function(x){
+  is_true <- (x %in% c("yes", "y", "true", "t", "1"))
+  is_false <- (x %in% c("no", "n", "false", "f", "0"))
+  is_na <- is.na(x) | (x %in% c("NA", "na", ""))
+  is_none <- (!is_true & !is_false & !is_na)
+  if(any(is_none))
+    stop("Failed to parse boolean values: ", paste(head(x[is_none], 5), collapse = ", "))
+  out <- rep(FALSE, length(x))
+  out[is_na] <- NA
+  out[is_true] <- TRUE
+  out
+}
+
+parse_date <- function(x){
+  as.Date(x)
+}
+
+parse_datetime <- function(x){
+  as.POSIXct(x)
+}
+
+paste_time <- function(x){
+  as.POSIXct(x)
 }
 
