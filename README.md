@@ -10,7 +10,7 @@ install_github("ropenscilabs/datapkg")
 The `datapkg_read` function retrieves and parses data packages from a local or remote sources. A few example packages are available from the [datasets](https://github.com/datasets) and [testsuite-py](https://github.com/frictionlessdata/testsuite-py) repositories. The path needs to point to a directory on disk or git remote or URL containing the root of the data package.
 
 ```r
-# load the client
+# Load client
 library(datapkg)
 
 # Clone via git
@@ -20,19 +20,20 @@ cities <- datapkg_read("git://github.com/datasets/world-cities")
 cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
 ```
 
-The output object will contain data and metadata from the data-package. The actual datasets are inside the `$data` field of the list.
+The output object contains data and metadata from the data-package, with actual datasets inside the `$data` field.
 
 ```r
 # Package info
 print(cities)
 
 # Open actual data in RStudio Viewer
-cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
+View(cities$data[[1]])
 ```
 
 In the case of multiple datasets, each one is either referenced by index or by name (if available):
 
 ```r
+# Package with many datasets
 euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
 names(euribor$data)
 View(euribor$data[[1]])
@@ -40,7 +41,7 @@ View(euribor$data[[1]])
 
 ## Status
 
-Outstanding problems:
+Open issues:
 
  - Make `readr` parse `0`/`1` values for booleans: [PR#406](https://github.com/hadley/readr/pull/406)
  - Support "year only" dates (`%Y`). Not sure if this constituates a valid date actually: [PR#407](https://github.com/hadley/readr/pull/407)
