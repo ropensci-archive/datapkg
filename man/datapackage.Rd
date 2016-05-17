@@ -16,9 +16,8 @@ Loads a data and meta-data from a 'data-package' directory or URL.
 }
 \examples{
 # Example data from https://github.com/datasets
-datapkg_read("https://raw.githubusercontent.com/datasets/ex-tabular-multiple-resources-fk/master")
-datapkg_read("https://raw.githubusercontent.com/datasets/gini-index/master")
-datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
+cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
+euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
 }
 \references{
 \url{http://frictionlessdata.io/data-packages}, \url{https://github.com/datasets}

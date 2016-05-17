@@ -10,9 +10,8 @@
 #' @references \url{http://frictionlessdata.io/data-packages}, \url{https://github.com/datasets}
 #' @export
 #' @examples # Example data from https://github.com/datasets
-#' datapkg_read("https://raw.githubusercontent.com/datasets/ex-tabular-multiple-resources-fk/master")
-#' datapkg_read("https://raw.githubusercontent.com/datasets/gini-index/master")
-#' datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
+#' cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
+#' euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
 datapkg_read <- function(path){
   root <- sub("datapackage.json$", "", path)
   root <- sub("/$", "", root)
