@@ -1,15 +1,4 @@
-# datapkg
-
-[![Build Status](https://travis-ci.org/ropenscilabs/datapkg.svg?branch=master)](https://travis-ci.org/ropenscilabs/datapkg)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropenscilabs/datapkg?branch=master&svg=true)](https://ci.appveyor.com/project/jeroenooms/datapkg)
-[![Coverage Status](https://codecov.io/github/ropenscilabs/datapkg/coverage.svg?branch=master)](https://codecov.io/github/ropenscilabs/datapkg?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/datapkg)](http://cran.r-project.org/package=datapkg)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/datapkg)](http://cran.r-project.org/web/packages/datapkg/index.html)
-[![Github Stars](https://img.shields.io/github/stars/ropenscilabs/datapkg.svg?style=social&label=Github)](https://github.com/ropenscilabs/datapkg)
-
-> Convenience functions for readingdatasets following the 'data packagist' format.
-
-## Example
+## Data Package in R
 
 Data-packages is a [standard format](http://frictionlessdata.io/data-packages/) for describing meta-data for a collection of datasets. The package `datapkg` provides convenience functions for retrieving and parsing data packages in R. To install in R:
 
