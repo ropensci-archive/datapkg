@@ -30,11 +30,13 @@ print(cities)
 View(cities$data[[1]])
 ```
 
-In the case of multiple datasets, each one is either referenced by index or by name (if available):
+In the case of multiple datasets, each one is either referenced by index or, if available, by name (names are optional in data packages).
 
 ```r
 # Package with many datasets
 euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
+
+# List datasets in this package
 names(euribor$data)
 View(euribor$data[[1]])
 ```
