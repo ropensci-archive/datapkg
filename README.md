@@ -43,7 +43,7 @@ View(euribor$data[[1]])
 
 ## Status
 
-Open issues:
+This package is work in progress. Current open issues:
 
  - Make `readr` parse `0`/`1` values for booleans: [PR#406](https://github.com/hadley/readr/pull/406)
  - Support "year only" dates (`%Y`). Not sure if this constituates a valid date actually: [PR#407](https://github.com/hadley/readr/pull/407)
