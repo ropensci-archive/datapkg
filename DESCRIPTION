@@ -12,6 +12,7 @@ License: MIT + file LICENSE
 Imports:
     methods,
     readr,
+    git2r,
     jsonlite,
     curl
 Suggests:

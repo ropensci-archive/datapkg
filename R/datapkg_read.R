@@ -9,12 +9,19 @@
 #' @aliases datapkg
 #' @references \url{http://frictionlessdata.io/data-packages}, \url{https://github.com/datasets}
 #' @export
-#' @examples # Example data from https://github.com/datasets
-#' cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
+#' @examples # Clone package with git:
+#' cities <- datapkg_read("git://github.com/datasets/world-cities")
+#'
+#' # Read over http
 #' euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
 datapkg_read <- function(path){
   root <- sub("datapackage.json$", "", path)
   root <- sub("/$", "", root)
+  if(is_git(root)){
+    newroot <- tempfile()
+    git2r::clone(root, newroot)
+    root <- newroot
+  }
   json_path <- file.path(root, "/datapackage.json")
   json <- if(is_url(root)){
     con <- curl::curl(json_path, "r")
@@ -55,6 +62,10 @@ get_data_path <- function(x, root){
       }
     }
   }
+}
+
+is_git <- function(x){
+  grepl("^git://", x)
 }
 
 is_url <- function(x){

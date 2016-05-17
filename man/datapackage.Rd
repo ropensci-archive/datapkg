@@ -15,8 +15,10 @@ datapkg_read(path)
 Loads a data and meta-data from a 'data-package' directory or URL.
 }
 \examples{
-# Example data from https://github.com/datasets
-cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
+# Clone package with git:
+cities <- datapkg_read("git://github.com/datasets/world-cities")
+
+# Read over http
 euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
 }
 \references{
