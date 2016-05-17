@@ -7,76 +7,53 @@
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/datapackage)](http://cran.r-project.org/web/packages/datapackage/index.html)
 [![Github Stars](https://img.shields.io/github/stars/ropenscilabs/datapackage.svg?style=social&label=Github)](https://github.com/ropenscilabs/datapackage)
 
-> Convenience functions for reading and writing datasets following the 'data packagist' format.
+> Convenience functions for readingdatasets following the 'data packagist' format.
 
-## Introduction
+## Example
 
-Data-packages is a [standard format](http://dataprotocols.org/data-packages/) for describing meta-data for a collection of datasets. The R package `datapackage` provides convenience functions for reading and writing data and meta-data in this format. To install in R:
+Data-packages is a [standard format](http://frictionlessdata.io/data-packages/) for describing meta-data for a collection of datasets. The package `datapkg` provides convenience functions for retrieving and parsing data packages in R. To install in R:
 
 ```r
 library(devtools)
 install_github("ropenscilabs/datapackage")
 ```
 
-The default behavior is to store datasets in the `data` sub-directory, which also is the standard location for datasets in R packages. Thereby the R package can also be a data-package which formalizes the bundled datasets.
-
-## Hello World
+The `datapkg_read` function retrieves and parses data packages from a local or remote sources. A few example packages are available from the [datasets](https://github.com/datasets) and [testsuite-py](https://github.com/frictionlessdata/testsuite-py) repositories. The path needs to point to a directory on disk or URL containing the root of the data package directory.
 
 ```r
-# Create new package in dir
-mypkg <- tempfile()
-dir.create(mypkg)
-test <- data_package(mypkg)
-
-# Set some fields
-test$name("My test")
-test$license("Public domain")
-test$homepage("www.jeroen.nl")
-test$description("This is a test package")
-test$resources$find()
-
-# Add data
-test$resources$add(iris)
-
-# View current json 
-test$json()
-
-# Lookup current data
-test$resources$find()
-test$resources$info("iris")
-test$resources$find(folder = "data")
-test$resources$find(folder = "nothing")
-test$resources$find("iris")
-test$resources$find("bla")
-
-# Add more data
-test$resources$add(cars)
-test$resources$add(mtcars)
-test$resources$remove("iris")
-test$json()
-
-# Add contributors
-test$contributors$find()
-test$contributors$add("Jeroen", "jeroenooms@gmail.com", "www.jeroen.nl")
-test$contributors$add("Karthik")
-test$contributors$remove("Karthik")
-
-# Add sources
-test$sources$find()
-test$sources$add("NASA", web = "www.nasa.gov")
-test$sources$add("blabla", "bla@blabla.com")
-test$sources$find("bla")
-test$sources$find("bla", exact = TRUE)
-test$sources$remove("blabla")
-
-# End result
-test$json()
-list.files(mypkg, recursive = T)
-
+library(datapkg)
+cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
 ```
 
-## Introduction
+The output object will contain data and metadata from the data-package. The actual datasets are inside the `$data` field of the list.
 
-Lorem Ipsum.
+```r
+# Show package metadat
+print(cities)
+
+# Open data in RStudio Viewer
+View(cities$data[[1]])
+```
+
+In the case of multiple datasets, each one is either referenced by index or by name (if available):
+
+```r
+euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
+names(euribor$data)
+View(euribor$data[[1]])
+```
+
+## Status
+
+Outstanding problems:
+
+ - Make `readr` parse `0`/`1` values for booleans: [PR#406](https://github.com/hadley/readr/pull/406)
+ - Support "year only" dates (`%Y`). Not sure if this constituates a valid date actually: [PR#407](https://github.com/hadley/readr/pull/407)
+ - R and `readr` require to specify which strings are interepreted as missing values. Default are empty string `""` and `NA`. A similar property needs to be defined in the datapackage spec.
+ - It is unclear what to do if the number of records in the csv does not match the fields. Examples: [s-and-p-500](https://github.com/datasets/s-and-p-500) and [currency-codes](https://raw.githubusercontent.com/frictionlessdata/testsuite-py/master/datasets/currency-codes)
+
+Features:
+
+ - Writing data packages from data frames. 
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

@@ -72,6 +72,10 @@ read_data_package <- function(path, dialect = list(), hash = NULL, fields = NULL
 }
 
 make_field <- function(name = "", type = "string", description = "", format = NULL, ...){
+
+  #datapkg prefixes strptime format with 'fmt:'
+  if(length(format))
+    format <- sub("^fmt:", "", format)
   switch(type,
     string = col_character(),
     number = col_number(),
@@ -79,9 +83,9 @@ make_field <- function(name = "", type = "string", description = "", format = NU
     boolean = col_logical(),
     object = col_character(),
     array = col_character(),
-    date = col_date(sub("^fmt:", "", format)),
-    datetime = col_datetime(sub("^fmt:", "", format)),
-    time = col_time(sub("^fmt:", "", format)),
+    date = col_date(format),
+    datetime = col_datetime(format),
+    time = col_time(format),
     col_character()
   )
 }
@@ -90,8 +94,7 @@ make_field <- function(name = "", type = "string", description = "", format = NU
 parse_data_file <- function(file, col_types = NULL, delimiter = ",", doubleQuote = TRUE,
     lineTerminator = "\r\n", quoteChar = '"', escapeChar = "", skipInitialSpace = TRUE,
     header = TRUE, caseSensitiveHeader = FALSE){
-
-  # unused: lineTerminator, skipInitialSpace, caseSensitiveHeader
+  # unused fields: lineTerminator, skipInitialSpace, caseSensitiveHeader
   message("Reading file ", file)
   readr::read_delim(
     col_types = col_types,
