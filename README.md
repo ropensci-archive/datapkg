@@ -23,10 +23,10 @@ cities <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/world
 The output object will contain data and metadata from the data-package. The actual datasets are inside the `$data` field of the list.
 
 ```r
-# Show package metadat
+# Package info
 print(cities)
 
-# Open data in RStudio Viewer
+# Open actual data in RStudio Viewer
 View(cities$data[[1]])
 ```
 
