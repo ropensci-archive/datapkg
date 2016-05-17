@@ -10,10 +10,13 @@ install_github("ropenscilabs/datapkg")
 The `datapkg_read` function retrieves and parses data packages from a local or remote sources. A few example packages are available from the [datasets](https://github.com/datasets) and [testsuite-py](https://github.com/frictionlessdata/testsuite-py) repositories. The path needs to point to a directory on disk or git remote or URL containing the root of the data package.
 
 ```r
+# load the client
 library(datapkg)
+
+# Clone via git
 cities <- datapkg_read("git://github.com/datasets/world-cities")
 
-# same over http
+# Same data but download over http
 cities <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/world-cities")
 ```
 
