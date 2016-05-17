@@ -17,7 +17,7 @@ library(datapkg)
 cities <- datapkg_read("git://github.com/datasets/world-cities")
 
 # Same data but download over http
-cities <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/world-cities")
+cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
 ```
 
 The output object will contain data and metadata from the data-package. The actual datasets are inside the `$data` field of the list.
@@ -27,7 +27,7 @@ The output object will contain data and metadata from the data-package. The actu
 print(cities)
 
 # Open actual data in RStudio Viewer
-View(cities$data[[1]])
+cities <- datapkg_read("https://raw.githubusercontent.com/datasets/world-cities/master")
 ```
 
 In the case of multiple datasets, each one is either referenced by index or by name (if available):
