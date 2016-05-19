@@ -1,7 +1,7 @@
-#' Open data-package
+#' Read/write data-package
 #'
-#' Retrieve and parse data and meta-data from a 'data-package' directory
-#' or URL.
+#' Read and write data frames to/from 'data-package' format. For reading
+#' supported paths are disk, http or git. For writing only disk is supported.
 #'
 #' @import readr
 #' @param path file path or URL to the data package directory
@@ -10,12 +10,20 @@
 #' @aliases datapkg
 #' @references \url{http://frictionlessdata.io/data-packages}, \url{https://github.com/datasets}
 #' @export
-#' @examples # Clone package with git:
+#' @examples # Create new data package
+#' pkgdir <- tempfile()
+#' datapkg_write(mtcars, path = pkgdir)
+#'
+#' # Read it back
+#' mypkg <- datapkg_read(pkgdir)
+#' print(mypkg$data$mtcars)
+#'
+#' # Clone package with git:
 #' cities <- datapkg_read("git://github.com/datasets/world-cities")
 #'
 #' # Read over http
 #' euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/master")
-datapkg_read <- function(path){
+datapkg_read <- function(path = getwd()){
   root <- sub("datapackage.json$", "", path)
   root <- sub("/$", "", root)
   if(is_git(root)){

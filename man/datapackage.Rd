@@ -5,9 +5,9 @@
 \alias{datapkg}
 \alias{datapkg_read}
 \alias{datapkg_write}
-\title{Open data-package}
+\title{Read/write data-package}
 \usage{
-datapkg_read(path)
+datapkg_read(path = getwd())
 
 datapkg_write(data, name, path = getwd())
 }
@@ -15,10 +15,18 @@ datapkg_write(data, name, path = getwd())
 \item{path}{file path or URL to the data package directory}
 }
 \description{
-Retrieve and parse data and meta-data from a 'data-package' directory
-or URL.
+Read and write data frames to/from 'data-package' format. For reading
+supported paths are disk, http or git. For writing only disk is supported.
 }
 \examples{
+# Create new data package
+pkgdir <- tempfile()
+datapkg_write(mtcars, path = pkgdir)
+
+# Read it back
+mypkg <- datapkg_read(pkgdir)
+print(mypkg$data$mtcars)
+
 # Clone package with git:
 cities <- datapkg_read("git://github.com/datasets/world-cities")
 
