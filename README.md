@@ -74,4 +74,5 @@ Features:
 
  - Writing data packages from data frames. 
 
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![rOpenSci](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![OKFN](http://assets.okfn.org/p/labs/img/logo.png)](https://okfn.org)
