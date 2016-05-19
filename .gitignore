@@ -10,3 +10,4 @@ src/Makevars
 inst/doc
 windows
 data/*
+datapackage.json
