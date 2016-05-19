@@ -1,6 +1,7 @@
 #' Open data-package
 #'
-#' Loads a data and meta-data from a 'data-package' directory or URL.
+#' Retrieve and parse data and meta-data from a 'data-package' directory
+#' or URL.
 #'
 #' @import readr
 #' @param path file path or URL to the data package directory
@@ -22,7 +23,7 @@ datapkg_read <- function(path){
     git2r::clone(root, newroot)
     root <- newroot
   }
-  json_path <- file.path(root, "/datapackage.json")
+  json_path <- file.path(root, "datapackage.json")
   json <- if(is_url(root)){
     con <- curl::curl(json_path, "r")
     on.exit(close(con))
