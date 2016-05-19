@@ -13,6 +13,7 @@
 #' @examples # Create new data package
 #' pkgdir <- tempfile()
 #' datapkg_write(mtcars, path = pkgdir)
+#' datapkg_write(iris, path = pkgdir)
 #'
 #' # Read it back
 #' mypkg <- datapkg_read(pkgdir)

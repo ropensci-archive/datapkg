@@ -7,6 +7,8 @@ library(devtools)
 install_github("ropenscilabs/datapkg")
 ```
 
+## Reading data
+
 The `datapkg_read` function retrieves and parses data packages from a local or remote sources. A few example packages are available from the [datasets](https://github.com/datasets) and [testsuite-py](https://github.com/frictionlessdata/testsuite-py) repositories. The path needs to point to a directory on disk or git remote or URL containing the root of the data package.
 
 ```r
@@ -40,6 +42,24 @@ euribor <- datapkg_read("https://raw.githubusercontent.com/datasets/euribor/mast
 names(euribor$data)
 View(euribor$data[[1]])
 ```
+
+## Writing data
+
+The package also has basic functionality to save a data frame into a data package and 
+update the `datapackage.json` file accordingly.
+
+```r
+# Create new data package
+pkgdir <- tempfile()
+datapkg_write(mtcars, path = pkgdir)
+datapkg_write(iris, path = pkgdir)
+
+# Read it back
+mypkg <- datapkg_read(pkgdir)
+print(mypkg$data$mtcars)
+```
+
+From here you can modify the `datapackage.json` file with other metadata.
 
 ## Status
 
