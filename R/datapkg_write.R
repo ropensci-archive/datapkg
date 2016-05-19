@@ -23,9 +23,31 @@ datapkg_write <- function(data, name, path = getwd()){
   pkg_info$resources <- c(pkg_info$resources,
     list(list(
       path = csv_name,
-      name = name
+      name = name,
+      schema = make_schema(data)
     ))
   )
   json <- jsonlite::toJSON(pkg_info, pretty = TRUE, auto_unbox = TRUE)
   writeLines(json, json_path)
+}
+
+make_schema <- function(data){
+  out <- as.list(rep(NA, length(data)))
+  for(i in seq_along(data)){
+    out[[i]] <- list(
+      name = names(data)[i],
+      type = get_type(data[[i]])
+    )
+  }
+  list(fields = out)
+}
+
+get_type <- function(x){
+  if(inherits(x, "Date")) return("date")
+  if(inherits(x, "POSIXt")) return("datetime")
+  if(is.character(x)) return("string")
+  if(is.integer(x)) return("integer")
+  if(is.numeric(x)) return("number")
+  if(is.logical(x)) return("boolean")
+  return("string")
 }
