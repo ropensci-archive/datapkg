@@ -1,6 +1,6 @@
 #' @rdname datapackage
 #' @param data a data frame to be added to the package
-#' @param path root dir of the data package
+#' @param name what to name this dataset
 #' @export
 datapkg_write <- function(data, name, path = getwd()){
   if(missing(name))

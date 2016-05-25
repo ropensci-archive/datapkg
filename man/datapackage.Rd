@@ -16,7 +16,7 @@ datapkg_write(data, name, path = getwd())
 
 \item{data}{a data frame to be added to the package}
 
-\item{path}{root dir of the data package}
+\item{name}{what to name this dataset}
 }
 \description{
 Read and write data frames to/from 'data-package' format. For reading
