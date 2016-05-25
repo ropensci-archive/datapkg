@@ -13,6 +13,10 @@ datapkg_write(data, name, path = getwd())
 }
 \arguments{
 \item{path}{file path or URL to the data package directory}
+
+\item{data}{a data frame to be added to the package}
+
+\item{path}{root dir of the data package}
 }
 \description{
 Read and write data frames to/from 'data-package' format. For reading
