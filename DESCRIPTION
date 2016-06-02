@@ -18,5 +18,7 @@ Imports:
 Suggests:
     jsonvalidate,
     ggplot2
-Remotes: ropenscilabs/jsonvalidate
+Remotes:
+    ropenscilabs/jsonvalidate,
+    hadley/readr
 RoxygenNote: 5.0.1
