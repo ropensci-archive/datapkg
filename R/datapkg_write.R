@@ -19,7 +19,7 @@ datapkg_write <- function(data, name, path = getwd()){
     jsonlite:::fromJSON(json_path, simplifyVector = FALSE)
   } else {
     message("Creating new ", json_path)
-    list()
+    list(name = basename(path))
   }
   readr::write_csv(data, csv_path)
   pkg_info$resources <- c(pkg_info$resources,
