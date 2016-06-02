@@ -16,5 +16,6 @@ Imports:
     jsonlite,
     curl
 Suggests:
+    jsonvalidate,
     ggplot2
 RoxygenNote: 5.0.1

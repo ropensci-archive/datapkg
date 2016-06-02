@@ -3,5 +3,6 @@
 S3method(print,datapkg_data)
 S3method(print,datapkg_resources)
 export(datapkg_read)
+export(datapkg_validate)
 export(datapkg_write)
 import(readr)

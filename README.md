@@ -5,6 +5,7 @@ Data-packages is a [standard format](http://frictionlessdata.io/data-packages/) 
 ```r
 library(devtools)
 install_github("hadley/readr")
+install_github("ropenscilabs/jsonvalidate")
 install_github("ropenscilabs/datapkg")
 ```
 
