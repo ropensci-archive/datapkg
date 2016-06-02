@@ -49,6 +49,10 @@ datapkg_read <- function(path = getwd()){
   data_names <- pkg_info$resources$name
   for(i in seq_len(nrow(pkg_info$resources))){
     target <- as.list(pkg_info$resources[i, ])
+    if(!length(target$schema))
+      stop("Dataset ", i, "is missing a schema")
+    if(!length(target$schema$fields))
+      stop("Dataset ", i, "is missing the schema.fields property")
     pkg_info$data[[i]] <- read_data_package(get_data_path(target, root),
       dialect = as.list(target$dialect), hash = target$hash, target$schema$fields[[1]])
   }
