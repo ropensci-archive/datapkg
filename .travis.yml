@@ -10,6 +10,12 @@ r_github_packages:
 warnings_are_errors: true
 #r_check_revdep: true
 
+# V8 is required for jsonvalidate
+addons:
+  apt:
+    packages:
+      - libv8-dev
+
 notifications:
   email:
     on_success: change
