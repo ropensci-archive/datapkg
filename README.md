@@ -1,5 +1,7 @@
 ## Data Package in R
 
+[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](http://www.repostatus.org/badges/latest/inactive.svg)](http://www.repostatus.org/#inactive)
+
 Data-packages is a [standard format](http://frictionlessdata.io/data-packages/) for describing meta-data for a collection of datasets. The package `datapkg` provides convenience functions for retrieving and parsing data packages in R. To install in R:
 
 ```r
