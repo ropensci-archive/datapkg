@@ -7,7 +7,8 @@ Authors@R: c(
     person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = "aut"))
 Description: Convenience functions for reading and writing datasets following
     the 'data packagist' format.
-URL: http://frictionlessdata.io/data-packages/
+URL: http://frictionlessdata.io/data-packages/, https://github.com/ropenscilabs/datapkg
+BugReports: https://github.com/ropenscilabs/datapkg/issues
 License: MIT + file LICENSE
 Imports:
     methods,
